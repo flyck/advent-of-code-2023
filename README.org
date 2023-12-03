@@ -1,8 +1,8 @@
-# Advent of Code
+* Advent of Code
 
 Snippets behind my advent of code challenges
 
-## Goals
+** Goals
 
 Advent of Code should be a fun learning experience to extend ones skills, maybe even in a new
 language. It is not necessarily about being the fastest or the best.
