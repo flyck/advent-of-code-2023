@@ -32,3 +32,42 @@ function sum(array1: number[]): number {
     (accumulator, currentValue) => accumulator + currentValue, 0,
   );
 }
+
+function power(array1: number[]): number {
+  return array1.reduce(
+    (accumulator, currentValue) => accumulator * currentValue, 1,
+  );
+}
+
+export function minimumSum(games: string) {
+  let minimumPowers: number[] = []
+
+  games.split("\n").forEach((game) => {
+    if (!game) return // skip empty lines
+
+    const [title, results] = game.split(":")
+
+    let minimumBag: { [key: string]: number } = {
+      red: 0,
+      blue: 0,
+      green: 0
+    }
+
+    results.split(";").forEach((result) => {
+      const entries = result.split(",")
+
+      entries.forEach((entry) => {
+        const [amount, color] = entry.trim().split(" ")
+
+        if (parseInt(amount) > minimumBag[color]) {
+          minimumBag[color] = parseInt(amount)
+        }
+      })
+    })
+    const currentPower = power(Object.values(minimumBag))
+    console.debug(`Calculated power ${currentPower} for row ${game}`)
+    minimumPowers.push(currentPower)
+  })
+
+  return sum(minimumPowers)
+}
