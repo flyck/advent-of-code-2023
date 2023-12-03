@@ -1,3 +1,18 @@
 # Advent of Code
 
 Snippets behind my advent of code challenges
+
+## Goals
+
+Advent of Code should be a fun learning experience to extend ones skills, maybe even in a new
+language. It is not necessarily about being the fastest or the best.
+
+
+What are my goals?
+- [ ] bun monorepo setup
+- [ ] bun debug setup
+- [ ] use bun test runner instead of vitest
+- [ ] github cicd pipeline
+- [ ] changelog / semver
+- [ ] dive into node array / map performance (x3)
+- [ ] find a way to benchmark for speed comparison
