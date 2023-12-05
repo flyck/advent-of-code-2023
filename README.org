@@ -9,6 +9,7 @@ language. It is not necessarily about being the fastest or the best.
 
 
 What are my goals?
+- [ ] for each function, show memory usage and speed
 - [ ] bun monorepo setup
 - [ ] bun debug setup
 - [ ] use bun test runner instead of vitest
