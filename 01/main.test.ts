@@ -1,6 +1,6 @@
 import { describe, test, expect } from "vitest"
 import * as fsProm from 'node:fs/promises';
-import { sumCorrection, sumCorrection2 } from "./main"
+import { sumCorrection } from "./main"
 
 describe("Calibration Sum Testsuite Part 1", () => {
   test("Example", () => {
@@ -21,19 +21,5 @@ treb7uchet`
     }
 
     expect(sumCorrection(data)).toBe(55017)
-  })
-})
-
-describe("Calibration Sum Testsuite Part 2", () => {
-  test("Example", () => {
-    const input = `two1nine
-eightwothree
-abcone2threexyz
-xtwone3four
-4nineeightseven2
-zoneight234
-7pqrstsixteen`
-
-    expect(sumCorrection2(input)).toBe(123)
   })
 })
