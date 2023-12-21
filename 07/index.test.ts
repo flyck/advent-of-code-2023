@@ -26,6 +26,6 @@ QQQJA 483`
   test("Input file", async () => {
     const input = await Bun.file("input.txt").text()
     const it = totalScore(input)
-    expect(it).toBe(253728865)
+    expect(it).toBe(253933213)
   })
 })

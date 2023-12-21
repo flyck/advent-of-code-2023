@@ -13,11 +13,9 @@ export function totalScore(input: string): number {
   placements.forEach((placement) => {
     const [hand, bid] = placement.split(" ")
     const rank = determineRank(hand)
-    ranks.push({ ...rank, bid: parseInt(bid) })
+    ranks.push({ ...rank, bid: parseInt(bid), hand: hand.split("") })
   })
 
-  console.log(placements.length)
-  //console.log("RANKS: " + JSON.stringify(ranks))
 
   let multiplier = placements.length
   Object.values(Rank).forEach((rank, asd) => {
@@ -27,13 +25,11 @@ export function totalScore(input: string): number {
 
     if (myRankResults.length == 1) {
       score += multiplier * myRankResults[0].bid
+      multiplier--
     }
 
     if (myRankResults.length > 1) {
-      // BUGBUG change sorting logic to simply compare cards by index
       const sorted = sortResults(myRankResults)
-
-      console.log("Sorted result: " + JSON.stringify(sorted))
 
       sorted.forEach((entry) => {
         // console.log(`Adding number: ${multiplier} * ${entry.bid}`)
@@ -42,8 +38,6 @@ export function totalScore(input: string): number {
       })
     }
   })
-
-  console.log(multiplier)
 
   return score
 }
@@ -59,15 +53,15 @@ export enum Rank {
   HIGH_CARD = "HIGH_CARD",
 }
 
-interface RankAndCardAndBid { rank: Rank, cards: string[], bid: number }
+interface RankAndCardAndBid { rank: Rank, cards: string[], bid: number, hand: string[] }
 
 export function sortResults(input: RankAndCardAndBid[]): RankAndCardAndBid[] {
   return input.sort(compareCards)
 }
 
 function compareCards(a: RankAndCardAndBid, b: RankAndCardAndBid): number {
-  const cardsA = a.cards.map((card) => ORDER.indexOf(card));
-  const cardsB = b.cards.map((card) => ORDER.indexOf(card));;
+  const cardsA = a.hand.map((card) => ORDER.indexOf(card));
+  const cardsB = b.hand.map((card) => ORDER.indexOf(card));;
 
   // Compare each card number
   for (let i = 0; i < cardsA.length; i++) {
@@ -89,13 +83,15 @@ export function determineRank(hand: string): { rank: Rank, cards: string[] } {
   const occurrences = getOccurrences(hand)
 
   let foundPairs: string[] = []
+  let foundFive = ""
+  let foundFour = ""
   let foundThree = ""
   Object.entries(occurrences).forEach(([card, occurrence]) => {
     if (occurrence == 5) {
-      return { rank: Rank.FIVE_OF_A_KIND, cards: [card] }
+      foundFive = card
     }
     if (occurrence == 4) {
-      return { rank: Rank.FOUR_OF_A_KIND, cards: [card] }
+      foundFour = card
     }
     if (occurrence == 3) {
       foundThree = card
@@ -104,6 +100,16 @@ export function determineRank(hand: string): { rank: Rank, cards: string[] } {
       foundPairs.push(card)
     }
   })
+
+  // found 5 check
+  if (foundFive != "") {
+    return { rank: Rank.FIVE_OF_A_KIND, cards: [foundFive] }
+  }
+
+  // found 4 check
+  if (foundFour != "") {
+    return { rank: Rank.FOUR_OF_A_KIND, cards: [foundFive] }
+  }
 
   // full house check
   if (foundThree != "" && foundPairs.length == 1) {
@@ -126,7 +132,6 @@ export function determineRank(hand: string): { rank: Rank, cards: string[] } {
   }
 
   // high card is the default
-  console.log(sortCards(cards))
   return { rank: Rank.HIGH_CARD, cards: sortCards(cards).slice(0, 1) }
 }
 
