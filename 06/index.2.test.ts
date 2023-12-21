@@ -13,6 +13,6 @@ Distance:  9 40 200`
   test("Input file", async () => {
     const input = await Bun.file("input.txt").text()
     const it = singleRaceWays(input)
-    expect(it).toBe(449550)
+    expect(it).toBe(28360140)
   })
 })
